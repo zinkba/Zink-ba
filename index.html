@@ -156,11 +156,16 @@ nav.scrolled{background-color:rgba(6,15,24,0.92);backdrop-filter:blur(18px);-web
 .after .avsd-item svg{stroke:var(--blue);}
 
 /* DEMO 3D — sección fija con scroll */
-.demo{position:relative;height:420vh;background:var(--navy-dark);z-index:2;}
+.demo{position:relative;height:420vh;background:var(--navy-dark);}
 #demo{scroll-margin-top:0;}
-.demo-sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(340px,0.85fr) 1.15fr;grid-template-rows:auto auto;grid-template-areas:"head slot" "foot slot";align-content:center;column-gap:4vw;padding:0 6vw;background:
+.demo-sticky{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;grid-template-columns:minmax(340px,0.85fr) 1.15fr;grid-template-rows:auto auto;grid-template-areas:"head slot" "foot slot";align-content:center;column-gap:4vw;padding:0 6vw;z-index:6;}
+.demo-bg{position:sticky;top:0;height:100svh;margin-bottom:-100svh;pointer-events:none;background:
   radial-gradient(ellipse 40% 55% at 66% 52%,rgba(91,164,207,0.16) 0%,transparent 70%),
   radial-gradient(circle at 66% 52%,transparent 0 29%,rgba(91,164,207,0.06) 29.1% 29.25%,transparent 29.4% 39%,rgba(91,164,207,0.04) 39.1% 39.25%,transparent 39.4%);}
+.sw-tag{position:absolute;left:0;top:0;z-index:8;pointer-events:none;opacity:0;transition:opacity .35s var(--ease-out);}
+.sw-tag.on{opacity:1;}
+.sw-tag b{position:absolute;left:-0.5px;top:-34px;width:1px;height:26px;background:linear-gradient(to top,rgba(143,198,234,0.95),rgba(143,198,234,0.15));}
+.sw-tag span{position:absolute;left:0;top:-34px;transform:translate(-50%,-100%);white-space:nowrap;font-size:10px;letter-spacing:2.4px;text-transform:uppercase;color:#fff;padding:7px 12px;border-radius:99px;background:rgba(6,15,24,0.72);border:0.5px solid rgba(91,164,207,0.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
 .demo-copy{display:contents;}
 .demo-head{grid-area:head;align-self:end;position:relative;z-index:6;}
 .demo-foot{grid-area:foot;align-self:start;position:relative;z-index:6;}
@@ -183,10 +188,9 @@ nav.scrolled{background-color:rgba(6,15,24,0.92);backdrop-filter:blur(18px);-web
 .slot-demo{grid-area:slot;height:80svh;width:100%;align-self:center;}
 
 /* PRODUCTO — giro 360 con scroll */
-.product{position:relative;height:260vh;background:var(--cream);z-index:2;}
-.product-sticky{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;padding:0 6vw;overflow:hidden;}
+.product{position:relative;height:260vh;background:var(--cream);}
+.product-sticky{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;padding:0 6vw;overflow:hidden;z-index:6;}
 .slot-product{height:82svh;}
-.slot-product::after{content:"";position:absolute;left:24%;right:24%;bottom:3%;height:6%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(13,31,45,0.32) 0%,rgba(13,31,45,0.1) 45%,transparent 72%);filter:blur(5px);}
 .product-txt{position:relative;z-index:6;max-width:520px;}
 .product-txt h2{font-family:"DM Serif Display",serif;font-weight:400;font-size:clamp(72px,8vw,96px);letter-spacing:-0.04em;line-height:.95;color:var(--navy);margin-bottom:18px;}
 .product-sub{font-size:16px;color:var(--muted);line-height:1.75;max-width:420px;margin-bottom:36px;}
@@ -276,6 +280,7 @@ footer{position:relative;z-index:6;background:var(--navy-dark);padding:40px 52px
   .avsd-grid{grid-template-columns:1fr;}
   .avsd-col{padding:30px 26px;}
   .demo{height:400vh;}
+  .demo-bg{background:radial-gradient(ellipse 80% 42% at 50% 56%,rgba(91,164,207,0.16) 0%,transparent 70%);}
   .demo-sticky{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"head" "slot" "foot";align-content:stretch;padding:84px 24px 32px;}
   .demo-head h2{font-size:38px;margin-bottom:8px;}
   .demo-head p{margin-bottom:0;font-size:14px;}
@@ -439,13 +444,14 @@ footer{position:relative;z-index:6;background:var(--navy-dark);padding:40px 52px
 
 <!-- DEMO 3D -->
 <section class="demo" id="demo" aria-label="Cómo funciona Zink">
+  <div class="demo-bg" aria-hidden="true"></div>
   <div class="demo-sticky">
     <div class="demo-copy">
       <div class="demo-head">
         <h2>Mirá cómo <em>tritura.</em></h2>
         <p>De los restos al desagüe en segundos. Sin bolsas, sin olores.</p>
       </div>
-      <div class="slot slot-demo" data-slot="demo" data-fitw="2.6">
+      <div class="slot slot-demo" data-slot="demo" data-fitw="5.0" data-fith="6.3" data-cy="1.3">
         <div class="fallback fb-prod" role="img" aria-label="Triturador Zink"></div>
       </div>
       <div class="demo-foot">
@@ -457,6 +463,7 @@ footer{position:relative;z-index:6;background:var(--navy-dark);padding:40px 52px
         <div class="demo-bar" aria-hidden="true"><span id="demoBar"></span></div>
       </div>
     </div>
+    <div class="sw-tag" id="swTag" aria-hidden="true"><b></b><span>Interruptor</span></div>
   </div>
 </section>
 
@@ -679,7 +686,7 @@ footer{position:relative;z-index:6;background:var(--navy-dark);padding:40px 52px
 </script>
 
 <script type="module">
-/* ═══ Zink 3D: modelo procedural, cutaway y partículas ═══ */
+/* ═══ Zink 3D: modelo, bacha con agua, cutaway y partículas ═══ */
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
@@ -687,11 +694,15 @@ const root = document.documentElement;
 const ZK = window.ZK;
 const reduce = ZK.reduce;
 const canvas = document.getElementById('gl');
+const swTag = document.getElementById('swTag');
+const demoSticky = document.querySelector('.demo-sticky');
+const demoHead = document.querySelector('.demo-head');
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const lerp = (a,b,t) => a + (b - a) * t;
 const smooth = (a,b,x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
 const easeOutExpo = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
 const easeOut3 = x => 1 - Math.pow(1 - x, 3);
+const easeInOut = x => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 
 let renderer;
 try {
@@ -865,25 +876,180 @@ function makeFood(i) {
   }
   return g;
 }
-const food = foodColors.map((c, i) => { const f = makeFood(i); tilt.add(f); return f; });
+const food = foodColors.map((c, i) => { const f = makeFood(i); spin.add(f); return f; });
 
-/* ── Partículas trituradas + agua ── */
+/* ── Bacha con agua, mesada, canilla e interruptor (solo en la demo) ── */
+const SINK = { hw: 1.6, hd: 1.0, r: 0.28, t: 0.05, b0: 2.22, h: 1.2 };
+SINK.rim = SINK.b0 + SINK.h;
+SINK.top = SINK.rim + 0.22;
+const LEVEL_MAX = SINK.b0 + 0.6;
+const CUT_Z = 0.12;                                  // corte fijo: la bacha se ve por dentro
+const sinkClipLocal = new THREE.Plane(new THREE.Vector3(0, 0, -1), CUT_Z);
+const sinkClip = new THREE.Plane();
+const sClips = [sinkClip];
+const sinkRoot = new THREE.Group(), sinkTilt = new THREE.Group(), sinkSpin = new THREE.Group();
+sinkRoot.add(sinkTilt); sinkTilt.add(sinkSpin); scene.add(sinkRoot); sinkRoot.visible = false;
+
+function rrPath(p, hw, hd, r) {
+  p.moveTo(-hw + r, -hd);
+  p.lineTo(hw - r, -hd); p.absarc(hw - r, -hd + r, r, -Math.PI / 2, 0, false);
+  p.lineTo(hw, hd - r); p.absarc(hw - r, hd - r, r, 0, Math.PI / 2, false);
+  p.lineTo(-hw + r, hd); p.absarc(-hw + r, hd - r, r, Math.PI / 2, Math.PI, false);
+  p.lineTo(-hw, -hd + r); p.absarc(-hw + r, -hd + r, r, Math.PI, Math.PI * 1.5, false);
+  return p;
+}
+function extrudeY(shape, depth) {
+  const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: false, curveSegments: 14 });
+  g.rotateX(-Math.PI / 2); return g;
+}
+function clampToRoundRect(geo, hw, hd, r) {
+  const p = geo.attributes.position, R = new Float32Array(p.count);
+  for (let i = 0; i < p.count; i++) {
+    let x = p.getX(i), z = p.getZ(i);
+    if (Math.abs(x) > hw - r && Math.abs(z) > hd - r) {
+      const cx = Math.sign(x) * (hw - r), cz = Math.sign(z) * (hd - r);
+      const dx = x - cx, dz = z - cz, d = Math.hypot(dx, dz);
+      if (d > r) { x = cx + dx / d * r; z = cz + dz / d * r; p.setXYZ(i, x, 0, z); }
+    }
+    R[i] = Math.hypot(x, z);
+  }
+  return R;
+}
+function makeMarble() {
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 600;
+  const g = c.getContext('2d');
+  g.fillStyle = '#efece6'; g.fillRect(0, 0, 1024, 600);
+  let s = 11; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < 16; i++) {
+    g.strokeStyle = `rgba(${(118 + r() * 30) | 0},${(122 + r() * 30) | 0},${(130 + r() * 30) | 0},${(0.08 + r() * 0.22).toFixed(2)})`;
+    g.lineWidth = 0.6 + r() * 2.4;
+    g.beginPath();
+    let x = r() * 1024, y = r() * 600; g.moveTo(x, y);
+    for (let k = 0; k < 4; k++) {
+      const x2 = x + (r() - 0.3) * 420, y2 = y + (r() - 0.5) * 260;
+      g.bezierCurveTo(x + (r() - 0.5) * 200, y + (r() - 0.5) * 200, x2 + (r() - 0.5) * 200, y2 + (r() - 0.5) * 200, x2, y2);
+      x = x2; y = y2;
+    }
+    g.stroke();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
+  return t;
+}
+function makeSwirl() {
+  const c = document.createElement('canvas'); c.width = c.height = 512;
+  const g = c.getContext('2d'); g.lineCap = 'round';
+  for (let k = 0; k < 7; k++) {
+    g.beginPath();
+    for (let s = 0; s <= 64; s++) {
+      const rr = 16 + s * 3.7, a = k * Math.PI * 2 / 7 + s * 0.09;
+      const x = 256 + Math.cos(a) * rr, y = 256 + Math.sin(a) * rr;
+      if (s) g.lineTo(x, y); else g.moveTo(x, y);
+    }
+    g.strokeStyle = 'rgba(255,255,255,0.6)'; g.lineWidth = 4 + (k % 2) * 3; g.stroke();
+  }
+  g.globalCompositeOperation = 'destination-in';
+  const grd = g.createRadialGradient(256, 256, 8, 256, 256, 250);
+  grd.addColorStop(0, 'rgba(0,0,0,1)'); grd.addColorStop(0.7, 'rgba(0,0,0,0.75)'); grd.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = grd; g.fillRect(0, 0, 512, 512);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+
+const steelS = new THREE.MeshStandardMaterial({ color: 0xcfd6dc, metalness: 1, roughness: 0.2, side: DS, clippingPlanes: sClips });
+const chromeS = new THREE.MeshStandardMaterial({ color: 0xf2f5f8, metalness: 1, roughness: 0.08 });
+// Bacha de acero
+{
+  const wall = rrPath(new THREE.Shape(), SINK.hw + SINK.t, SINK.hd + SINK.t, SINK.r + SINK.t);
+  wall.holes.push(rrPath(new THREE.Path(), SINK.hw, SINK.hd, SINK.r));
+  const walls = new THREE.Mesh(extrudeY(wall, SINK.h + SINK.t), steelS);
+  walls.position.y = SINK.b0 - SINK.t; sinkSpin.add(walls);
+  const bot = rrPath(new THREE.Shape(), SINK.hw + SINK.t, SINK.hd + SINK.t, SINK.r + SINK.t);
+  const hole = new THREE.Path(); hole.absarc(0, 0, 0.34, 0, Math.PI * 2, false); bot.holes.push(hole);
+  const bottom = new THREE.Mesh(extrudeY(bot, SINK.t), steelS);
+  bottom.position.y = SINK.b0 - SINK.t; sinkSpin.add(bottom);
+  const drainRing = new THREE.Mesh(new THREE.TorusGeometry(0.37, 0.035, 10, 56), new THREE.MeshStandardMaterial({ color: 0xf2f5f8, metalness: 1, roughness: 0.1, clippingPlanes: sClips }));
+  drainRing.rotation.x = Math.PI / 2; drainRing.position.y = SINK.b0 + 0.012; sinkSpin.add(drainRing);
+}
+// Mesada de mármol (con la cara del corte)
+const CW = 2.35, CD = 1.35, CT = 0.22;
+{
+  const tex = makeMarble(); tex.repeat.set(1 / (2 * CW), 1 / (2 * CD)); tex.offset.set(0.5, 0.5);
+  const marble = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: tex, roughness: 0.32, clearcoat: 0.45, clearcoatRoughness: 0.2, side: DS, clippingPlanes: sClips });
+  const cs = new THREE.Shape(); cs.moveTo(-CW, -CD); cs.lineTo(CW, -CD); cs.lineTo(CW, CD); cs.lineTo(-CW, CD); cs.lineTo(-CW, -CD);
+  cs.holes.push(rrPath(new THREE.Path(), SINK.hw, SINK.hd, SINK.r));
+  const counter = new THREE.Mesh(extrudeY(cs, CT), marble); counter.position.y = SINK.rim; sinkSpin.add(counter);
+  const capM = new THREE.MeshStandardMaterial({ color: 0xd9d3c9, roughness: 0.55 });
+  [-1, 1].forEach(sd => {
+    const w = CW - SINK.hw;
+    const c = new THREE.Mesh(new THREE.PlaneGeometry(w, CT), capM);
+    c.position.set(sd * (SINK.hw + w / 2), SINK.rim + CT / 2, CUT_Z - 0.002); sinkSpin.add(c);
+  });
+}
+// Canilla
+{
+  const fa = new THREE.Group(); fa.position.set(-0.05, SINK.top, -1.12); sinkSpin.add(fa);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.13, 0.1, 32), chromeS); base.position.y = 0.05; fa.add(base);
+  const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.06, 0.62, 24), chromeS); pipe.position.y = 0.41; fa.add(pipe);
+  const curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(0, 0.7, 0), new THREE.Vector3(0, 1.0, 0.12), new THREE.Vector3(0, 0.84, 0.64));
+  fa.add(new THREE.Mesh(new THREE.TubeGeometry(curve, 28, 0.05, 16, false), chromeS));
+  const tip = new THREE.Mesh(new THREE.CylinderGeometry(0.058, 0.05, 0.09, 20), chromeS); tip.position.set(0, 0.8, 0.645); fa.add(tip);
+  const lever = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.03, 0.28), chromeS); lever.position.set(0.1, 0.52, -0.08); lever.rotation.x = -0.35; fa.add(lever);
+}
+// Interruptor de aire sobre la mesada
+const airSw = new THREE.Group(); airSw.position.set(1.92, SINK.top, -0.6); sinkSpin.add(airSw);
+const swBase = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.26, 0.05, 48), chromeS); swBase.position.y = 0.025; airSw.add(swBase);
+const swLedMat = new THREE.MeshStandardMaterial({ color: 0x0b1b28, emissive: 0x5BA4CF, emissiveIntensity: 0.3, roughness: 0.4 });
+const swLed = new THREE.Mesh(new THREE.TorusGeometry(0.19, 0.016, 10, 56), swLedMat); swLed.rotation.x = Math.PI / 2; swLed.position.y = 0.055; airSw.add(swLed);
+const swBtn = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.07, 48), new THREE.MeshStandardMaterial({ color: 0xe8edf1, metalness: 0.7, roughness: 0.22 })); swBtn.position.y = 0.085; airSw.add(swBtn);
+const swRipple = new THREE.Mesh(new THREE.RingGeometry(0.24, 0.28, 56), new THREE.MeshBasicMaterial({ color: 0x8fc6ea, transparent: true, opacity: 0, side: DS, depthWrite: false, blending: THREE.AdditiveBlending }));
+swRipple.rotation.x = -Math.PI / 2; swRipple.position.y = 0.06; swRipple.visible = false; airSw.add(swRipple);
+const swAnchor = new THREE.Object3D(); swAnchor.position.y = 0.14; airSw.add(swAnchor);
+
+// Agua: volumen, cara del corte, superficie con remolino
+const WHW = SINK.hw - 0.012, WHD = SINK.hd - 0.012, WR = SINK.r - 0.012;
+const waterMat = new THREE.MeshPhysicalMaterial({ color: 0x3f97d0, transparent: true, opacity: 0.3, roughness: 0.05, metalness: 0, side: DS, depthWrite: false, clippingPlanes: sClips });
+const waterVol = new THREE.Mesh(extrudeY(rrPath(new THREE.Shape(), WHW, WHD, WR), 1), [new THREE.MeshBasicMaterial({ visible: false }), waterMat]);
+waterVol.position.y = SINK.b0; waterVol.renderOrder = 1; sinkSpin.add(waterVol);
+const CAP_SEG = 48;
+const wCapGeo = new THREE.PlaneGeometry(WHW * 2, 1, CAP_SEG, 1); wCapGeo.translate(0, 0.5, 0);
+const wCap = new THREE.Mesh(wCapGeo, new THREE.MeshPhysicalMaterial({ color: 0x3f97d0, transparent: true, opacity: 0.42, roughness: 0.05, side: DS, depthWrite: false }));
+wCap.position.set(0, SINK.b0, CUT_Z - 0.004); wCap.renderOrder = 2; wCap.frustumCulled = false; sinkSpin.add(wCap);
+const surfGeo = new THREE.PlaneGeometry(WHW * 2, WHD * 2, 64, 40); surfGeo.rotateX(-Math.PI / 2);
+const surfR = clampToRoundRect(surfGeo, WHW, WHD, WR);
+const surf = new THREE.Mesh(surfGeo, new THREE.MeshPhysicalMaterial({ color: 0xa8d5f0, transparent: true, opacity: 0.55, roughness: 0.04, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.04, side: DS, depthWrite: false, clippingPlanes: sClips }));
+surf.renderOrder = 3; surf.frustumCulled = false; sinkSpin.add(surf);
+const swirlGeo = new THREE.RingGeometry(0.03, 0.97, 72, 16); swirlGeo.rotateX(-Math.PI / 2);
+const swirlR = new Float32Array(swirlGeo.attributes.position.count);
+for (let i = 0; i < swirlR.length; i++) swirlR[i] = Math.hypot(swirlGeo.attributes.position.getX(i), swirlGeo.attributes.position.getZ(i));
+const swirlMat = new THREE.MeshBasicMaterial({ map: makeSwirl(), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: DS, clippingPlanes: sClips });
+const swirl = new THREE.Mesh(swirlGeo, swirlMat); swirl.renderOrder = 4; swirl.frustumCulled = false; swirl.visible = false; sinkSpin.add(swirl);
+
+/* ── Partículas: agua y restos triturados ── */
 const PN = 760;
 const parts = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ roughness: 0.5 }), PN);
 parts.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
 parts.frustumCulled = false;
-const seeds = [];
-const col = new THREE.Color();
 let rnd = 7; const rand = () => (rnd = (rnd * 16807) % 2147483647) / 2147483647;
+const seeds = [];
 for (let i = 0; i < PN; i++) {
-  const water = rand() < 0.34, f = i % 8;
-  seeds.push({ c: new THREE.Color(water ? 0x8fc6ea : foodColors[f]), water, f, b: rand(), a0: rand() * Math.PI * 2, r0: 0.08 + rand() * 0.5, s: water ? 0.012 + rand() * 0.016 : 0.018 + rand() * 0.026, sp: 9 + rand() * 9, L: 0.16 + rand() * 0.06, j: rand() });
-  parts.setColorAt(i, col.set(water ? 0x8fc6ea : foodColors[f]));
+  const water = rand() < 0.36, f = i % 8;
+  seeds.push({ c: new THREE.Color(water ? 0x8fc6ea : foodColors[f]), water, f, b: rand(), a0: rand() * Math.PI * 2, r0: 0.06 + rand() * 0.5, s: water ? 0.012 + rand() * 0.016 : 0.018 + rand() * 0.026, sp: 10 + rand() * 9, j: rand() });
+  parts.setColorAt(i, seeds[i].c);
 }
 parts.count = 0;
-tilt.add(parts);
+spin.add(parts);
 const dummy = new THREE.Object3D();
-const GRIND0 = 0.5, GSTEP = 0.022;
+
+// Salpicaduras y ondas cuando cae cada resto
+const FOOD_REST = [[-0.95, -0.38], [0.6, -0.55], [-0.2, -0.16], [1.08, -0.12], [-1.18, -0.24], [0.2, -0.66], [0.82, -0.3], [-0.58, -0.7]];
+const SPN = 80;
+const splash = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ color: 0xd8eefb, roughness: 0.15, metalness: 0.1 }), SPN);
+splash.instanceMatrix.setUsage(THREE.DynamicDrawUsage); splash.frustumCulled = false; splash.count = 0; sinkSpin.add(splash);
+const splashSeeds = Array.from({ length: SPN }, (_, i) => ({ f: Math.floor(i / 10), vx: (rand() - 0.5) * 1.6, vy: 1.4 + rand() * 1.4, vz: (rand() - 0.5) * 0.9, s: 0.022 + rand() * 0.022 }));
+const ripples = FOOD_REST.map(([x, z]) => {
+  const m = new THREE.Mesh(new THREE.RingGeometry(0.82, 1, 48), new THREE.MeshBasicMaterial({ color: 0xd8eefb, transparent: true, opacity: 0, side: DS, depthWrite: false, clippingPlanes: sClips }));
+  m.rotation.x = -Math.PI / 2; m.position.set(x, LEVEL_MAX, z); m.visible = false; m.renderOrder = 5; sinkSpin.add(m); return m;
+});
 
 // Destellos de "bacha limpia"
 const starCanvas = document.createElement('canvas'); starCanvas.width = starCanvas.height = 128;
@@ -891,21 +1057,119 @@ const starCanvas = document.createElement('canvas'); starCanvas.width = starCanv
   grd.addColorStop(0,'rgba(255,255,255,1)'); grd.addColorStop(.15,'rgba(200,230,255,.9)'); grd.addColorStop(1,'rgba(91,164,207,0)');
   g.fillStyle = grd; g.beginPath(); g.moveTo(64,0); g.quadraticCurveTo(70,58,128,64); g.quadraticCurveTo(70,70,64,128); g.quadraticCurveTo(58,70,0,64); g.quadraticCurveTo(58,58,64,0); g.fill(); }
 const starTex = new THREE.CanvasTexture(starCanvas);
-const glints = [[-0.62, 2.5, 0.5], [0.72, 2.95, 0.3], [0.08, 3.35, 0.6]].map(p => {
+const glints = [[-0.75, SINK.b0 + 0.32, -0.5], [0.98, SINK.b0 + 0.78, -0.78], [0.12, SINK.top + 0.22, -0.98]].map(p => {
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: starTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
-  s.position.set(...p); s.scale.setScalar(0); tilt.add(s); return s;
+  s.position.set(...p); s.scale.setScalar(0); sinkSpin.add(s); return s;
 });
 
+// Sombra en el piso (sección del producto)
+const shadowCanvas = document.createElement('canvas'); shadowCanvas.width = shadowCanvas.height = 256;
+{ const g = shadowCanvas.getContext('2d'); const grd = g.createRadialGradient(128,128,0,128,128,128);
+  grd.addColorStop(0,'rgba(8,16,26,0.55)'); grd.addColorStop(0.45,'rgba(8,16,26,0.2)'); grd.addColorStop(1,'rgba(8,16,26,0)');
+  g.fillStyle = grd; g.fillRect(0,0,256,256); }
+const floorShadow = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(shadowCanvas), transparent: true, depthWrite: false, opacity: 0 }));
+floorShadow.rotation.x = -Math.PI / 2; floorShadow.position.y = Y(985); tilt.add(floorShadow);
+
+/* ── Guion de la demo (progreso del scroll 0 → 1) ── */
+const T = {
+  fall0: 0.035, fallStep: 0.028, fallDur: 0.07,          // 01: los restos caen a la bacha con agua
+  press: 0.35,                                           // 02: se aprieta el interruptor
+  drain0: 0.385, drain1: 0.62,                           //     remolino: la bacha se vacía
+  spiral0: 0.39, spiralStep: 0.02, spiralDur: 0.07, dropDur: 0.035, shatter: 0.11,
+  cut0: 0.36, cut1: 0.46, cutEnd0: 0.78, cutEnd1: 0.88,  //     corte del Zink
+  grind0: 0.4, grind1: 0.82,
+  glint0: 0.86,                                          // 03: bacha limpia
+};
+const PLATE_Y = Y(546);
+
+const W = { lvl: LEVEL_MAX, D: 0, swirl: 0, calm: 1, spawnY: 6.6 };
+function surfAt(r, t) {
+  const y = W.lvl - W.D * Math.exp(-(r * r) / 0.2) + 0.006 * W.calm * Math.sin(r * 12 - t * 2.2);
+  return Math.max(SINK.b0 + 0.004, y);
+}
+function updateWater(t) {
+  const h = W.lvl - SINK.b0, show = h > 0.012;
+  waterVol.visible = surf.visible = wCap.visible = show;
+  swirl.visible = show && W.swirl > 0.01;
+  if (!show) return;
+  waterVol.scale.y = h;
+  const sp = surfGeo.attributes.position;
+  for (let i = 0; i < sp.count; i++) sp.setY(i, surfAt(surfR[i], t));
+  sp.needsUpdate = true; surfGeo.computeVertexNormals();
+  if (swirl.visible) {
+    const wp = swirlGeo.attributes.position;
+    for (let i = 0; i < wp.count; i++) wp.setY(i, surfAt(swirlR[i], t) + 0.004);
+    wp.needsUpdate = true; swirlMat.opacity = W.swirl;
+  }
+  const cp = wCapGeo.attributes.position;
+  for (let i = 0; i <= CAP_SEG; i++) cp.setY(i, surfAt(Math.hypot(cp.getX(i), CUT_Z), t) - SINK.b0);
+  cp.needsUpdate = true;
+}
+
+function demoSink(p, t, dt) {
+  const du = clamp((p - T.drain0) / (T.drain1 - T.drain0), 0, 1);
+  const on = smooth(T.drain0, T.drain0 + 0.05, p);
+  W.lvl = lerp(LEVEL_MAX, SINK.b0, easeInOut(du));
+  W.D = Math.min(0.45, (W.lvl - SINK.b0) * 0.92) * on;
+  W.swirl = on * (1 - smooth(T.drain1 - 0.07, T.drain1, p)) * 0.6;
+  W.calm = 1 - on;
+  updateWater(t);
+  swirl.rotation.y -= dt * (0.6 + 3.2 * on);
+
+  // Interruptor: se hunde, se prende el anillo azul y sale una onda
+  const press = Math.sin(clamp((p - T.press + 0.012) / 0.03, 0, 1) * Math.PI);
+  swBtn.position.y = 0.085 - 0.04 * press;
+  const led = smooth(T.press, T.press + 0.012, p) * (1 - smooth(T.grind1, T.grind1 + 0.06, p));
+  swLedMat.emissiveIntensity = 0.3 + led * (2.4 + Math.sin(t * 6) * 0.35);
+  const rk = (p - T.press) / 0.05;
+  swRipple.visible = rk > 0 && rk < 1;
+  if (swRipple.visible) { swRipple.scale.setScalar(1 + rk * 2.6); swRipple.material.opacity = (1 - rk) * 0.85; }
+
+  // Salpicaduras
+  let n = 0;
+  for (let i = 0; i < SPN; i++) {
+    const sd = splashSeeds[i];
+    const land = T.fall0 + sd.f * T.fallStep + T.fallDur;
+    const tau = (p - land) / 0.03 * 0.6;
+    if (tau <= 0 || tau >= 0.6) continue;
+    const [rx, rz] = FOOD_REST[sd.f];
+    const y0 = W.lvl + 0.02, y = y0 + sd.vy * tau - 4.9 * tau * tau;
+    if (y < y0 - 0.04) continue;
+    dummy.position.set(rx + sd.vx * tau, y, Math.min(0.08, rz + sd.vz * tau));
+    dummy.rotation.set(tau * 8, tau * 5, 0);
+    dummy.scale.setScalar(sd.s * (1 - tau * 0.8));
+    dummy.updateMatrix(); splash.setMatrixAt(n++, dummy.matrix);
+  }
+  splash.count = n; splash.instanceMatrix.needsUpdate = true;
+  ripples.forEach((m, i) => {
+    const k = (p - (T.fall0 + i * T.fallStep + T.fallDur)) / 0.06;
+    m.visible = k > 0 && k < 1 && W.lvl - SINK.b0 > 0.05;
+    if (!m.visible) return;
+    m.scale.setScalar(0.12 + k * 0.42);
+    m.material.opacity = (1 - k) * 0.7;
+    m.position.y = surfAt(Math.hypot(m.position.x, m.position.z), t) + 0.006;
+  });
+
+  // Bacha limpia
+  glints.forEach((g, i) => { const u = (p - (T.glint0 + i * 0.035)) / 0.08; g.scale.setScalar(u > 0 && u < 1 ? Math.sin(u * Math.PI) * 0.5 : 0); g.material.rotation = u * 1.5; });
+}
+
 /* ── Slots del DOM: el producto vuela entre ellos ── */
-const slots = [...document.querySelectorAll('.slot[data-slot]')].map(el => ({ el, name: el.dataset.slot, fitw: parseFloat(el.dataset.fitw) || 2.2 }));
+const slots = [...document.querySelectorAll('.slot[data-slot]')].map(el => ({
+  el, name: el.dataset.slot,
+  fitw: parseFloat(el.dataset.fitw) || 2.2,
+  fith: parseFloat(el.dataset.fith) || MODEL_H,
+  cy: parseFloat(el.dataset.cy) || 0,
+}));
+const slotMap = Object.fromEntries(slots.map(s => [s.name, s]));
 function measure(s, vw, vh) {
   const r = s.el.getBoundingClientRect();
   const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / Math.max(1, r.height);
   const wpp = WORLD_H / vh;
-  s.w = vis;
+  s.w = vis; s.rt = r.top;
+  s.s = Math.min((r.height * 0.86) / s.fith, (r.width * 0.92) / s.fitw) * wpp;
   s.x = (r.left + r.width / 2 - vw / 2) * wpp;
-  s.y = -(r.top + r.height / 2 - vh / 2) * wpp;
-  s.s = Math.min((r.height * 0.86) / MODEL_H, (r.width * 0.92) / s.fitw) * wpp;
+  s.y = -(r.top + r.height / 2 - vh / 2) * wpp - s.cy * s.s;
 }
 
 const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
@@ -915,8 +1179,6 @@ addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight, false);
   camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
 });
-
-let t0 = null, last = 0, cleared = false, plateAngle = 0;
 
 function heroFood(t) {
   if (reduce) t = 0;
@@ -932,54 +1194,73 @@ function heroFood(t) {
 
 function demoFood(p, t) {
   food.forEach((f, i) => {
-    const s0 = 0.03 + i * 0.032, fall = 0.12, settle = 0.05;
-    const g = GRIND0 + i * GSTEP;
-    if (p < s0 || p > g + 0.02) { f.visible = false; return; }
+    const [rx, rz] = FOOD_REST[i];
+    const s0 = T.fall0 + i * T.fallStep, land = s0 + T.fallDur;
+    const d0 = T.spiral0 + i * T.spiralStep, d1 = d0 + T.spiralDur, d2 = d1 + T.dropDur;
+    const g = d0 + T.shatter;
+    if (p < s0 || p > g + 0.015) { f.visible = false; return; }
     f.visible = true;
-    const px = ((i % 4) - 1.5) * 0.05, pz = (((i * 7) % 3) - 1) * 0.04;
-    const ang = i * 0.8, pr = 0.22 + (i % 3) * 0.1;
-    const restY = Y(546) + (i % 3) * 0.04;
-    let x = px, y, z = pz, sc = 1.4;
-    if (p < s0 + fall) {
-      const u = (p - s0) / fall;
-      y = lerp(4.8, 1.9, u * u);
-      sc = lerp(1.4, 1.1, u);
-      f.rotation.set(u * 5 + i, u * 3 + i * 2, u * 2);
-    } else if (p < s0 + fall + settle) {
-      const u = easeOut3((p - s0 - fall) / settle);
-      y = lerp(1.9, restY, u);
-      x = lerp(px, Math.cos(ang) * pr, u); z = lerp(pz, Math.sin(ang) * pr, u);
-      sc = 1.1;
-      f.rotation.set(5 + i, 3 + i * 2, 2);
-    } else {
-      x = Math.cos(ang) * pr; z = Math.sin(ang) * pr; y = restY; sc = 1.1;
-      const shake = smooth(0.44, 0.5, p) * 0.04;
+    const pr = 0.2 + (i % 3) * 0.1, px = Math.cos(i * 0.8) * pr, pz = Math.sin(i * 0.8) * pr;
+    const restY = PLATE_Y + (i % 3) * 0.04;
+    let x = rx, z = rz, y, sc = 1.35;
+    if (p < land) {                                   // cae a la bacha
+      const u = (p - s0) / T.fallDur;
+      y = lerp(W.spawnY, surfAt(Math.hypot(rx, rz), t) + 0.05, u * u);
+      sc *= smooth(0, 0.22, u);
+      f.rotation.set(u * 6 + i, u * 4 + i * 2, u * 2);
+    } else if (p < d0) {                              // flota en el agua
+      y = surfAt(Math.hypot(rx, rz), t) + 0.05 + Math.sin(t * 2.1 + i * 1.7) * 0.015;
+      f.rotation.set(6 + i + Math.sin(t * 0.9 + i) * 0.15, 4 + i * 2 + t * 0.15, 2);
+    } else if (p < d1) {                              // remolino hacia el desagüe
+      const k = (p - d0) / T.spiralDur;
+      const r0 = Math.hypot(rx, rz), a0 = Math.atan2(rz, rx);
+      const r = r0 * Math.pow(1 - k, 1.35), a = a0 + k * Math.PI * 3.4;
+      x = Math.cos(a) * r; z = Math.min(0.05, Math.sin(a) * r);
+      y = surfAt(r, t) + 0.05 * (1 - k);
+      sc = lerp(1.35, 1.0, smooth(0.6, 1, k));
+      f.rotation.set(6 + i + k * 6, 4 + i * 2 + k * 9, 2 + k * 3);
+    } else if (p < d2) {                              // baja por el desagüe hasta el disco
+      const k = (p - d1) / T.dropDur;
+      x = lerp(0, px, k); z = lerp(0, pz, k);
+      y = lerp(W.lvl - W.D, restY, k * k);
+      sc = 1.0;
+      f.rotation.set(12 + i + k * 4, 13 + i * 2 + k * 5, 5 + k * 2);
+    } else {                                          // sobre el disco, esperando
+      x = px; z = pz; y = restY; sc = 1.0;
+      const shake = smooth(T.grind0, T.grind0 + 0.05, p) * 0.04;
       x += Math.sin(t * 40 + i) * shake; z += Math.cos(t * 37 + i) * shake;
     }
-    if (p > g) sc *= 1 - clamp((p - g) / 0.02, 0, 1);
+    if (p > g) sc *= 1 - clamp((p - g) / 0.015, 0, 1);
     f.position.set(x, y, z);
     f.scale.setScalar(Math.max(sc, 0.0001));
   });
 }
 
+function particlePos(sd, u, out) {
+  let y, r;
+  if (u < 0.25) { const k = u / 0.25; y = lerp(SINK.b0 + 0.02, Y(552), k); r = sd.r0 * 0.55; }
+  else if (u < 0.42) { const k = (u - 0.25) / 0.17; r = lerp(sd.r0 * 0.55, 0.7, easeOut3(k)); y = lerp(Y(552), Y(585), k); }
+  else if (u < 0.85) { const k = (u - 0.42) / 0.43; r = 0.71 + Math.sin(k * Math.PI) * 0.03; y = lerp(Y(585), Y(880), k); }
+  else { const k = (u - 0.85) / 0.15; r = lerp(0.71, 0.18 + sd.j * 0.2, Math.min(1, k * 2.2)); y = lerp(Y(880), Y(1060), k); }
+  const a = sd.a0 + u * sd.sp * 1.3;
+  out.set(Math.cos(a) * r, y, Math.sin(a) * r);
+}
 function demoParticles(p) {
-  if (p < GRIND0 - 0.01 || p > 1) { parts.count = 0; return; }
+  if (p < T.spiral0 || p > 1) { parts.count = 0; return; }
   let n = 0;
   for (let i = 0; i < PN; i++) {
     const sd = seeds[i];
-    const birth = sd.water ? 0.42 + sd.b * 0.36 : GRIND0 + sd.f * GSTEP + sd.b * 0.12;
-    const u = (p - birth) / sd.L;
-    if (u <= 0 || u >= 1) continue;
-    let y, r;
-    if (u < 0.22) { const k = u / 0.22; r = lerp(sd.r0, 0.7, easeOut3(k)); y = lerp(Y(552), Y(585), k); }
-    else if (u < 0.8) { const k = (u - 0.22) / 0.58; r = 0.71 + Math.sin(k * Math.PI) * 0.03; y = lerp(Y(585), Y(880), k); }
-    else { const k = (u - 0.8) / 0.2; r = lerp(0.71, 0.18 + sd.j * 0.2, Math.min(1, k * 2.2)); y = lerp(Y(880), Y(1060), k); }
-    const a = sd.a0 + u * sd.sp;
+    let birth, L, u0;
+    if (sd.water) { birth = T.drain0 + 0.015 + sd.b * (T.drain1 - T.drain0); L = 0.2 + sd.j * 0.05; u0 = 0; }
+    else { birth = T.spiral0 + sd.f * T.spiralStep + T.shatter + sd.b * 0.08; L = 0.15 + sd.j * 0.04; u0 = 0.25; }
+    const u = u0 + (p - birth) / L * (1 - u0);
+    if (u <= u0 || u >= 1) continue;
+    particlePos(sd, u, dummy.position);
+    const lu = (u - u0) / (1 - u0);
     let sc = sd.s;
-    if (u < 0.06) sc *= u / 0.06;
-    if (u > 0.86) sc *= (1 - u) / 0.14;
-    dummy.position.set(Math.cos(a) * r, y, Math.sin(a) * r);
-    dummy.rotation.set(a * 2, a, sd.j * 6);
+    if (lu < 0.06) sc *= lu / 0.06;
+    if (u > 0.88) sc *= (1 - u) / 0.12;
+    dummy.rotation.set(u * 9, u * 7, sd.j * 6);
     dummy.scale.setScalar(sc);
     dummy.updateMatrix();
     parts.setMatrixAt(n, dummy.matrix);
@@ -991,6 +1272,21 @@ function demoParticles(p) {
   if (parts.instanceColor) parts.instanceColor.needsUpdate = true;
 }
 
+// Etiqueta "Interruptor" que sigue al botón en pantalla
+const swWorld = new THREE.Vector3();
+let tagOn = false;
+function setTag(on) { if (on !== tagOn) { tagOn = on; swTag.classList.toggle('on', on); } }
+function placeTag(p, vw, vh) {
+  const on = sinkRoot.visible && p > 0.335 && p < 0.7;
+  setTag(on);
+  if (!on) return;
+  swAnchor.getWorldPosition(swWorld); swWorld.project(camera);
+  const sr = demoSticky.getBoundingClientRect();
+  swTag.style.transform = `translate3d(${((swWorld.x + 1) / 2 * vw - sr.left).toFixed(1)}px,${((1 - swWorld.y) / 2 * vh - sr.top).toFixed(1)}px,0)`;
+}
+
+let t0 = null, last = 0, cleared = false, plateAngle = 0;
+
 function tick(now) {
   const vw = innerWidth, vh = innerHeight;
   if (t0 === null) { t0 = now; last = now; }
@@ -1001,6 +1297,7 @@ function tick(now) {
   for (const s of slots) { measure(s, vw, vh); sumW += s.w; if (!best || s.w > best.w) best = s; }
   if (sumW < 0.002) {
     if (!cleared) { renderer.clear(); cleared = true; }
+    setTag(false);
     return;
   }
   cleared = false;
@@ -1009,13 +1306,13 @@ function tick(now) {
   mouse.x += (mouse.tx - mouse.x) * k; mouse.y += (mouse.ty - mouse.y) * k;
 
   const dp = ZK.demoP, pp = ZK.prodP, hp = ZK.heroP;
-  const cutK = smooth(0.34, 0.47, dp) * (1 - smooth(0.76, 0.88, dp));
-  const grindK = smooth(0.44, 0.5, dp) * (1 - smooth(0.8, 0.88, dp));
+  const cutK = smooth(T.cut0, T.cut1, dp) * (1 - smooth(T.cutEnd0, T.cutEnd1, dp));
+  const grindK = smooth(T.grind0, T.grind0 + 0.05, dp) * (1 - smooth(T.grind1, T.grind1 + 0.05, dp));
   const sway = reduce ? 0 : Math.sin(t * 0.45) * 0.28;
 
   const states = {
     hero:    { rotY: -0.4 + sway + mouse.x * 0.35 + hp * 1.3 - (1 - intro) * 1.6, tiltX: 0.1 + mouse.y * 0.1 + hp * 0.25, cut: 3, bob: reduce ? 0 : Math.sin(t * 0.9) * 0.06, sc: 0.9 + 0.1 * intro },
-    demo:    { rotY: -0.6 * cutK + (1 - smooth(0, 0.3, dp)) * 0.25 + (reduce ? 0 : Math.sin(t * 0.6) * 0.04), tiltX: lerp(0.32, 0.14, cutK), cut: lerp(3, 0.0, cutK), bob: 0, sc: 1 },
+    demo:    { rotY: -0.3 - 0.24 * cutK + (reduce ? 0 : Math.sin(t * 0.5) * 0.03), tiltX: lerp(0.38, 0.3, cutK), cut: lerp(3, 0.0, cutK), bob: 0, sc: 1 },
     product: { rotY: -0.45 + pp * Math.PI * 2, tiltX: 0.06 + (reduce ? 0 : mouse.y * 0.05), cut: 3, bob: 0, sc: 1 },
   };
 
@@ -1036,6 +1333,23 @@ function tick(now) {
   product.updateMatrixWorld(true);
   clipPlane.copy(clipLocal).applyMatrix4(spin.matrixWorld);
 
+  // Bacha: sigue al slot de la demo (el Zink se separa cuando vuela al producto)
+  const ds = slotMap.demo;
+  sinkRoot.visible = !!ds && ds.w > 0.001;
+  if (sinkRoot.visible) {
+    sinkRoot.position.set(ds.x, ds.y, 0);
+    sinkRoot.scale.setScalar(ds.s);
+    sinkTilt.rotation.x = states.demo.tiltX;
+    sinkSpin.rotation.y = states.demo.rotY;
+    sinkRoot.updateMatrixWorld(true);
+    sinkClip.copy(sinkClipLocal).applyMatrix4(sinkSpin.matrixWorld);
+    const hb = demoHead.getBoundingClientRect().bottom;
+    const spawnPx = hb < ds.rt + 4 ? hb + 6 : -80;          // en celular el título queda arriba de la escena
+    W.spawnY = clamp((((vh / 2 - spawnPx) * (WORLD_H / vh) - ds.y) / ds.s) / Math.cos(states.demo.tiltX), LEVEL_MAX + 0.9, 6.6);
+    demoSink(dp, t, dt);
+  }
+  floorShadow.material.opacity = ((slotMap.product ? slotMap.product.w : 0) + 0.5 * (slotMap.hero ? slotMap.hero.w : 0)) / sumW;
+
   // Disco triturador
   plateAngle += dt * grindK * 46;
   plate.rotation.y = plateAngle;
@@ -1044,18 +1358,17 @@ function tick(now) {
   rimBlue.intensity = 4.2 + grindK * 2.5;
 
   // Modo según el slot dominante
-  if (best.name === 'hero') { heroFood(t); parts.count = 0; glints.forEach(g => g.scale.setScalar(0)); }
-  else if (best.name === 'demo') {
-    demoFood(dp, t); demoParticles(dp);
-    glints.forEach((g, i) => { const u = (dp - (0.84 + i * 0.04)) / 0.08; g.scale.setScalar(u > 0 && u < 1 ? Math.sin(u * Math.PI) * 0.55 : 0); g.material.rotation = u * 1.5; });
-  } else { food.forEach(f => f.visible = false); parts.count = 0; glints.forEach(g => g.scale.setScalar(0)); }
+  if (best.name === 'hero') { heroFood(t); parts.count = 0; }
+  else if (best.name === 'demo') { demoFood(dp, t); demoParticles(dp); }
+  else { food.forEach(f => f.visible = false); parts.count = 0; }
+  placeTag(dp, vw, vh);
 
   renderer.render(scene, camera);
   if (!root.classList.contains('gl')) root.classList.add('gl');
 }
 
 ZK.ticks.push(tick);
-window.__zink = { scene, camera, renderer, product };
+window.__zink = { scene, camera, renderer, product, sinkRoot };
 </script>
 </body>
 </html>
